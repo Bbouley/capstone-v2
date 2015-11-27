@@ -5,7 +5,7 @@ testDirective.directive('testDirective', function() {
     return {
         restrict   : 'EA',
         transclude : false,
-        templateUrl : '/src/client/app/components/test-directive/test-directive.html',
+        templateUrl : '/app/components/test-directive/test-directive.html',
         scope : {},
         controllerAs : 'vm',
         controller : testDirectiveController,

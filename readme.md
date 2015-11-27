@@ -2,7 +2,12 @@
 
 ## Description
 
-A site to allow users to create projects for green energy ideas and then collaborate with other users to build out their project. The site will allow people to come together and create and build ideas that they can use to generate electricity without having to rely on fossil fuels.
+A site to allow users to create projects for different ideas and then collaborate with other users to build out their project. The site will allow people to come together and create and build ideas that can be categorized into several different sections such as:
+- Art and Design
+- Engineering
+- DIY
+- Internet Of Things
+- And others...
 
 ## Technologies
 - MEAN Stack

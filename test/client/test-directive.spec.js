@@ -8,7 +8,7 @@ describe('creating the test-directive', function() {
     beforeEach(inject(function($compile, $rootScope, $templateCache) {
         element = angular.element('<test-directive></test-directive>');
 
-        $templateCache.put('/src/client/app/components/test-directive/test-directive.html', '');
+        $templateCache.put('/app/components/test-directive/test-directive.html', '');
 
         scope = $rootScope.$new();
         element = $compile(element)(scope);
@@ -28,11 +28,4 @@ describe('creating the test-directive', function() {
         expect(vm.people).to.deep.equal(['me', 'myself', 'I'])
     })
 
-})
-
-describe('true', function() {
-    it('should be true', function(done) {
-        expect(1).to.equal(1);
-        done()
-    });
 });

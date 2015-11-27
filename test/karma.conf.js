@@ -49,7 +49,7 @@ module.exports = function(config) {
         browsers    : ['Chrome'],
 
         // Continuous Integration mode
-        singleRun   : false,
+        singleRun   : true,
 
         // Concurrency level
         // how many browser should be started simultanous
