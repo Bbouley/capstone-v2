@@ -127,11 +127,11 @@ gulp.task('connectDist', function (cb) {
         });
 });
 
-gulp.task('unit', function (done) {
-      karma.start({
-            configFile: __dirname + '/test/karma.conf.js',
-            singleRun: true
-      }, done());
+gulp.task('angular', function (done) {
+    karma.start({
+        configFile: __dirname + '/test/karma.conf.js',
+        singleRun: true
+    }, done());
 });
 
 

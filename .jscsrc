@@ -52,7 +52,6 @@
     "catch",
     "typeof"
   ],
-  "safeContextKeyword": "target",
   "validateLineBreaks": "LF",
   "validateQuoteMarks": "'",
   "validateIndentation": 4,

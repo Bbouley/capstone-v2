@@ -23,7 +23,7 @@ module.exports = function(config) {
             '../src/client/**/*.js',
 
             // *** Tests *** //
-            '../test/client/*.spec.js',
+            '../test/client/*.spec.karma.js'
         ],
 
         exclude : [
@@ -59,7 +59,7 @@ module.exports = function(config) {
             'karma-mocha',
             'karma-chai',
             'karma-ng-html2js-preprocessor',
-            'karma-chrome-launcher',
+            'karma-chrome-launcher'
         ]
-    })
-}
+    });
+};

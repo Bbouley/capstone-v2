@@ -5,18 +5,21 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var mongoose = require('mongoose')
+var mongoose = require('mongoose');
 var config = require('../../_config.js');
 
 
 // *** routes *** //
 var routes = require('./routes/index.js');
+var userRoutes = require('./routes/userRoutes.js');
+var projectRoutes = require('./routes/projectRoutes.js');
+var commentRoutes = require('./routes/commentRoutes.js');
 
 
 // *** express instance *** //
 var app = express();
 
-// *** mongo *** //
+// *** mongoose *** //
 var mongoURI = process.env.MONGOLAB_URI || config.mongoURI[app.settings.env];
 mongoose.connect(mongoURI, function(err, res) {
     if (err) {
@@ -37,6 +40,9 @@ app.use(express.static(path.join(__dirname, '../client')));
 
 // *** main routes *** //
 app.use('/', routes);
+app.use('/api/', userRoutes);
+app.use('/api/', projectRoutes);
+app.use('/api/', commentRoutes);
 
 
 // catch 404 and forward to error handler
