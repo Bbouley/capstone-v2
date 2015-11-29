@@ -13,7 +13,7 @@ var config = require('../../_config.js');
 var routes = require('./routes/index.js');
 var userRoutes = require('./routes/userRoutes.js');
 var projectRoutes = require('./routes/projectRoutes.js');
-var commentRoutes = require('./routes/commentRoutes.js');
+var postRoutes = require('./routes/postRoutes.js');
 
 
 // *** express instance *** //
@@ -42,7 +42,7 @@ app.use(express.static(path.join(__dirname, '../client')));
 app.use('/', routes);
 app.use('/api/', userRoutes);
 app.use('/api/', projectRoutes);
-app.use('/api/', commentRoutes);
+app.use('/api/', postRoutes);
 
 
 // catch 404 and forward to error handler

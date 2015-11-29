@@ -3,7 +3,7 @@ var router = express.Router();
 var mongoose = require('mongoose-q')(require('mongoose'));
 var User = require('../models/user.js');
 var Project = require('../models/project.js');
-var Comment = require('../models/comment.js');
+var Post = require('../models/post.js');
 
 
 //get ALL projects, populate fields
@@ -29,3 +29,5 @@ var Comment = require('../models/comment.js');
 
 //add uploads to a project (AWS maybe???)
 
+
+module.exports = router;

@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 var User = require('./user.js');
-var Comment = require('./comment.js');
+var Post = require('./post.js');
 var Schema = mongoose.Schema;
 
 var Project = new Schema ({
@@ -12,7 +12,7 @@ var Project = new Schema ({
         index    : { unique : true }
     },
     description : String,
-    comments    : [{ type : Schema.Types.ObjectId, ref : 'comments' }],
+    comments    : [{ type : Schema.Types.ObjectId, ref : 'post' }],
     category    : String,
     uploads     : [Schema.Types.Mixed]
 });

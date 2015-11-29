@@ -1,3 +1,4 @@
+/* jshint -W030, -W117 */
 describe('creating the test-directive', function() {
     var element,
         scope,
@@ -25,7 +26,7 @@ describe('creating the test-directive', function() {
     });
 
     it('should have access to the controller', function() {
-        expect(vm.people).to.deep.equal(['me', 'myself', 'I'])
-    })
+        expect(vm.people).to.deep.equal(['me', 'myself', 'I']);
+    });
 
 });

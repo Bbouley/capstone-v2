@@ -3,7 +3,7 @@ var router = express.Router();
 var mongoose = require('mongoose-q')(require('mongoose'));
 var User = require('../models/user.js');
 var Project = require('../models/project.js');
-var Comment = require('../models/comment.js');
+var Post = require('../models/post.js');
 
 
 //get ALL comments for single project, populate fields
@@ -23,5 +23,7 @@ var Comment = require('../models/comment.js');
 
 //add upvote to comment (user has to be on project team to do this)
 
+
+module.exports = router;
 
 

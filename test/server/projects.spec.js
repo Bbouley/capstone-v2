@@ -1,6 +1,12 @@
+process.env.NODE_ENV = 'test';
+
 var chai = require('chai');
 var chaiHttp = require('chai-http');
 var server = require('../../src/server/app');
+var mongoose = require('mongoose-q')(require('mongoose'));
+var User = require('../../src/server/models/user.js');
+var Post = require('../../src/server/models/post.js');
+var Project = require('../../src/server/models/project.js')
 
 // *** add in requirements for mongoose and schemas *** //
 
