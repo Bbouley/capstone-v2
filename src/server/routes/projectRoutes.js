@@ -6,10 +6,24 @@ var Project = require('../models/project.js');
 var Post = require('../models/post.js');
 
 
-//get ALL projects, populate fields
+//get ALL projects (add in populate function)
+router.get('/projects', function(req, res, next) {
+    Project.find()
+    .populate('admin')
+    .populate('members')
+    .populate('posts')
+    .execQ()
+    .then(function(data) {
+        res.json(data);
+    })
+    .catch(function(err) {
+        res.send(err);
+    })
+    .done();
+});
 
 
-//get SINGLE project, populate fields
+//get SINGLE project (add in populate function)
 
 
 //add SINGLE project (has to be logged in to do this)

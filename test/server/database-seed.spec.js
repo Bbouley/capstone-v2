@@ -6,8 +6,8 @@ var server = require('../../src/server/app');
 var mongoose = require('mongoose-q')(require('mongoose'));
 var User = require('../../src/server/models/user.js');
 var Post = require('../../src/server/models/post.js');
-var Project = require('../../src/server/models/project.js')
-var helper = require('./test-helpers.js')
+var Project = require('../../src/server/models/project.js');
+var helper = require('./test-helpers.js');
 
 var should = chai.should();
 chai.use(chaiHttp);
@@ -20,9 +20,14 @@ describe('Test Helper functions', function() {
         helper.dropAll();
         helper.seedDB();
         done();
-    })
+    });
 
-    it('should seed database', function(done) {
+    afterEach(function(done) {
+        helper.dropAll();
+        done();
+    });
+
+    it('should seed users collection', function(done) {
         chai.request(server)
         .get('/api/users')
         .end(function(err, res) {
@@ -30,7 +35,18 @@ describe('Test Helper functions', function() {
             res.body.should.be.a('array');
             res.body.length.should.equal(3);
             done();
-        })
+        });
+    });
+
+    it('should seed projects collection', function(done) {
+        chai.request(server)
+        .get('/api/projects')
+        .end(function(err, res) {
+            res.should.have.status(200);
+            res.body.should.be.a('array');
+            res.body.length.should.equal(2);
+            done();
+        });
     });
 
 });

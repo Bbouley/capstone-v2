@@ -13,10 +13,10 @@ router.get('/users', function(req, res, next) {
         res.json(data);
     })
     .catch(function(err) {
-        res.send(err)
+        res.send(err);
     })
     .done();
-})
+});
 
 //get SINGLE user
 

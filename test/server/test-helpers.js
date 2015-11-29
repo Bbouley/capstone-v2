@@ -3,7 +3,7 @@ process.env.NODE_ENV = 'test';
 var mongoose = require('mongoose-q')(require('mongoose'));
 var User = require('../../src/server/models/user.js');
 var Post = require('../../src/server/models/post.js');
-var Project = require('../../src/server/models/project.js')
+var Project = require('../../src/server/models/project.js');
 
 function dropAll() {
     User.collection.drop();
@@ -42,10 +42,33 @@ function seedDB() {
         memberOf : [],
         commentsMade : [],
         siteAdmin : false
-    })
+    });
 
     testUser2.save();
 
+    var designProject = new Project ({
+        admin : [],
+        members : [],
+        title : 'Design Project',
+        description : 'A project about design',
+        comments : [],
+        category : 'Design',
+        uploads : []
+    });
+
+    designProject.save();
+
+    var engineeringProject = new Project ({
+        admin : [],
+        members : [],
+        title : 'Engineering Project',
+        description : 'A project about engineering',
+        comments : [],
+        category : 'Engineering',
+        uploads : []
+    });
+
+    engineeringProject.save();
 
 }
 

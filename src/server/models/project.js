@@ -12,7 +12,7 @@ var Project = new Schema ({
         index    : { unique : true }
     },
     description : String,
-    comments    : [{ type : Schema.Types.ObjectId, ref : 'post' }],
+    posts    : [{ type : Schema.Types.ObjectId, ref : 'post' }],
     category    : String,
     uploads     : [Schema.Types.Mixed]
 });
