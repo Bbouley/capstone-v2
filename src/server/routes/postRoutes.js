@@ -6,22 +6,22 @@ var Project = require('../models/project.js');
 var Post = require('../models/post.js');
 
 
-//get ALL comments for single project, populate fields
+//get ALL posts for single project, populate fields
 
 
-//get ALL comments for single user
+//get ALL posts for single user
 
 
-//post new comment to poject
+//post new post to poject
 
 
-//delete comment from project (has to be admin to do this)
+//delete post from project (has to be admin to do this)
 
 
-//edit comment (has to be user who posted comment)
+//edit post (has to be user who posted post)
 
 
-//add upvote to comment (user has to be on project team to do this)
+//add upvote to post (user has to be on project team to do this)
 
 
 module.exports = router;

@@ -12,9 +12,46 @@ var Project = require('../../src/server/models/project.js');
 
 var should = chai.should();
 
-describe('example', function() {
-    it('should return 1', function() {
-        var test = 1;
-        test.should.equal(1);
+describe('Users API', function() {
+
+    it('should get ALL users', function(done) {
+
     });
+
+    it('should get SINGLE user', function(done) {
+
+    });
+
+    it('should add SINGLE user', function(done) {
+
+    });
+
+    it('should edit SINGLE user', function(done) {
+
+    });
+
+    it('site admin can delete SINGLE user', function(done) {
+
+    });
+
+    it('non site admin cannot delete user', function(done) {
+
+    });
+
+    it('project admin can add SINGLE user to project members', function(done) {
+
+    });
+
+    it('non project admin cannot add user to project', function(done) {
+
+    });
+
+    it('project admin can remove SINGLE user from project members', function(done) {
+
+    });
+
+    it('non project admin cannot remove SINGLE user from project members', function(done) {
+
+    });
+
 });

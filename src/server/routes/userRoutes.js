@@ -33,7 +33,4 @@ router.get('/users', function(req, res, next) {
 //add user onto project(check this isnt being done twice in project routes)
 
 
-//make user member of a project (same as above)
-
-
 module.exports = router;

@@ -19,10 +19,43 @@ chai.use(chaiHttp);
 var should = chai.should();
 
 
-describe('example', function() {
-    it('should return 1', function() {
-        var test = 1;
-        test.should.equal(1);
+describe('posts API', function() {
+
+    it('should get ALL posts for single project', function(done) {
+
+    });
+
+    it('should get ALL posts for single user', function(done) {
+
+    });
+
+    it('should add SINGLE post to project', function(done) {
+
+    });
+
+    it('should delete SINGLE post to project, project admin only', function(done) {
+
+    });
+
+    it('should prevent non admin from removing post', function(done) {
+
+    });
+
+    it('should allow user to edit their own post', function(done)
+    {
+
+    });
+
+    it('should prevent user from editing other users posts', function(done) {
+
+    });
+
+    it('should allow user to upvote other users posts, but only once', function(done) {
+
+    });
+
+    it('should prevent non-logged in user from upvoting post', function(done) {
+
     });
 });
 

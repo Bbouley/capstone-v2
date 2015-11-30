@@ -12,9 +12,40 @@ var Project = require('../../src/server/models/project.js');
 
 var should = chai.should();
 
-describe('example', function() {
-    it('should return 1', function() {
-        var test = 1;
-        test.should.equal(1);
+describe('Projects API', function() {
+
+    it('should get ALL projects', function() {
+
     });
+
+    it('should get SINGLE project', function() {
+
+    });
+
+    it('should add SINGLE project', function() {
+
+    });
+
+    it('should edit SINGLE project', function() {
+
+    });
+
+    it('should delete SINGLE project', function() {
+
+    });
+
+
+    //could these be tested in edit project?
+    it('should add SINGLE member to project', function() {
+
+    });
+
+    it('should add SINGLE comment to project', function() {
+
+    })
+
+     it('should add SINGLE upload to project', function() {
+
+    })
+
 });
