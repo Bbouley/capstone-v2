@@ -16,7 +16,7 @@ var User = new Schema ({
     },
     adminOf      : [{ type : Schema.Types.ObjectId, ref : 'projects'}],
     memberOf     : [{ type : Schema.Types.ObjectId, ref : 'projects'}],
-    commentsMade : [{ type : Schema.Types.ObjectId, ref : 'post'}],
+    postsMade : [{ type : Schema.Types.ObjectId, ref : 'post'}],
     siteAdmin    : {
         type     : Boolean,
         required : true,

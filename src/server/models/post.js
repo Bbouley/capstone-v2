@@ -10,4 +10,4 @@ var Post = new Schema ({
     content   : String
 });
 
-module.exports = mongoose.model('comments', Post);
+module.exports = mongoose.model('posts', Post);

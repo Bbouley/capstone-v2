@@ -13,12 +13,13 @@ function dropAll() {
 
 function seedDB() {
 
+    //save users
     var bradley = new User ({
         userName : 'Bradley',
         email : 'myemail@email.com',
         adminOf : [],
         memberOf : [],
-        commentsMade : [],
+        postsMade : [],
         siteAdmin : true
     });
 
@@ -29,7 +30,7 @@ function seedDB() {
         email : 'testUser1@email.com',
         adminOf : [],
         memberOf : [],
-        commentsMade : [],
+        postsMade : [],
         siteAdmin : false
     });
 
@@ -40,18 +41,19 @@ function seedDB() {
         email : 'testUser2@email.com',
         adminOf : [],
         memberOf : [],
-        commentsMade : [],
+        postsMade : [],
         siteAdmin : false
     });
 
     testUser2.save();
 
+    //save projects
     var designProject = new Project ({
         admin : [],
         members : [],
         title : 'Design Project',
         description : 'A project about design',
-        comments : [],
+        posts : [],
         category : 'Design',
         uploads : []
     });
@@ -63,13 +65,24 @@ function seedDB() {
         members : [],
         title : 'Engineering Project',
         description : 'A project about engineering',
-        comments : [],
+        posts : [],
         category : 'Engineering',
         uploads : []
     });
 
     engineeringProject.save();
 
+    var randomProject = new Project ({
+        admin : [],
+        members : [],
+        title : 'Random Project',
+        description : 'A random Project',
+        posts : [],
+        cateory : 'Random',
+        uploads : []
+    });
+
+    randomProject.save();
 }
 
 module.exports = {
