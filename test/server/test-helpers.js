@@ -78,7 +78,7 @@ function seedDB() {
         title : 'Random Project',
         description : 'A random Project',
         posts : [],
-        cateory : 'Random',
+        category : 'Random',
         uploads : []
     });
 
