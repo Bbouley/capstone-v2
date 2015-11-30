@@ -21,6 +21,7 @@ function seedDB() {
     var bradley = new User ({
         userName : 'Bradley',
         email : 'myemail@email.com',
+        password : 'Bradley',
         adminOf : [],
         memberOf : [],
         postsMade : [],
@@ -32,6 +33,7 @@ function seedDB() {
     var testUser1 = new User ({
         userName : 'testUser1',
         email : 'testUser1@email.com',
+        password : 'testUser1',
         adminOf : [],
         memberOf : [],
         postsMade : [],
@@ -43,6 +45,7 @@ function seedDB() {
     var testUser2 = new User ({
         userName : 'testUser2',
         email : 'testUser2@email.com',
+        password : 'testUser2',
         adminOf : [],
         memberOf : [],
         postsMade : [],
@@ -94,7 +97,7 @@ function getUserID(cb) {
     chai.request(server)
     .get('/api/users')
     .end(function(err, res) {
-        return({
+        return ({
             bradleyID : res.body[0]._id,
             testUser1ID : res.body[1]._id,
             testUser2ID : res.body[2]._id

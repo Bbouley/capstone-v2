@@ -31,9 +31,9 @@ describe('Users API', function() {
             testUser1ID = res.body[1]._id;
             testUser2ID = res.body[2]._id;
             done();
-        })
+        });
 
-    })
+    });
 
     //get all users is being tested in database-seed already
 
@@ -42,10 +42,11 @@ describe('Users API', function() {
         .get('/api/user/' + bradleyID)
         .end(function(err, res) {
             res.should.have.status(200);
-            res.should.be.json;
+            res.should.be.json();
             res.body.should.be.a('object');
             res.body.should.have.property('userName');
             res.body.should.have.property('email');
+            res.body.should.have.property('password');
             res.body.should.have.property('adminOf');
             res.body.should.have.property('memberOf');
             res.body.should.have.property('postsMade');
@@ -53,13 +54,14 @@ describe('Users API', function() {
             res.body.userName.should.equal('Bradley');
             res.body.siteAdmin.should.equal(true);
             done();
-        })
+        });
     });
 
     it('should add SINGLE user', function(done) {
         var newUser = ({
             userName : 'PostingUser',
             email : 'PostUser@email.com',
+            password : 'PostingUser'
         });
         chai.request(server)
         .post('/api/users')
@@ -70,6 +72,7 @@ describe('Users API', function() {
             res.body.should.be.a('object');
             res.body.should.have.property('userName');
             res.body.should.have.property('email');
+            res.body.should.have.property('password');
             res.body.should.have.property('adminOf');
             res.body.should.have.property('memberOf');
             res.body.should.have.property('postsMade');
@@ -77,7 +80,7 @@ describe('Users API', function() {
             res.body.userName.should.equal('PostingUser');
             res.body.email.should.equal('PostUser@email.com');
             done();
-        })
+        });
     });
 
     it('should edit SINGLE user', function(done) {
@@ -94,6 +97,7 @@ describe('Users API', function() {
             res.body.should.be.a('object');
             res.body.should.have.property('userName');
             res.body.should.have.property('email');
+            res.body.should.have.property('password');
             res.body.should.have.property('adminOf');
             res.body.should.have.property('memberOf');
             res.body.should.have.property('postsMade');
@@ -101,7 +105,7 @@ describe('Users API', function() {
             res.body.userName.should.equal('Not Bradley');
             res.body.email.should.equal('myemail@email.com');
             done();
-        })
+        });
     });
 
     //when a project is created, needs to have adminOf defined, possibly test in projects section?

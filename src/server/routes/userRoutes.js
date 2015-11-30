@@ -31,20 +31,30 @@ router.get('/user/:id', function(req, res, next) {
             res.json(user);
         }
     });
-})
+});
 
-//add SINGLE user
+//add SINGLE user and hash password
 router.post('/users', function(req, res, next) {
     var newUser = new User(req.body);
-    newUser.saveQ()
-    .then(function(result) {
-        res.json(result);
-    })
-    .catch(function(err) {
-        res.send(err);
-    })
-    .done();
-})
+    newUser.generateHash(req.body.password, function(err, hash) {
+        if (err) {
+            console.log(err)
+        } else {
+            newUser.password = hash;
+            newUser.saveQ()
+            .then(function(result) {
+                res.json(result);
+            })
+            .catch(function(err) {
+                res.send(err);
+            });
+        }
+    });
+});
+
+//log SINGLE user in
+
+
 
 //edit SINGLE user
 router.put('/user/:id', function(req, res, next) {
@@ -59,7 +69,7 @@ router.put('/user/:id', function(req, res, next) {
         res.send(err);
     })
     .done();
-})
+});
 
 //add project to adminOf user section (this should happen straight away when user creates project)
 

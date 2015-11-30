@@ -44,10 +44,10 @@ describe('Projects API', function() {
 
     it('should add SINGLE comment to project', function() {
 
-    })
+    });
 
-     it('should add SINGLE upload to project', function() {
+    it('should add SINGLE upload to project', function() {
 
-    })
+    });
 
 });

@@ -1,3 +1,5 @@
+require('dotenv').load();
+
 // *** main dependencies *** //
 var express = require('express');
 var path = require('path');
@@ -36,6 +38,13 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, '../client')));
+// app.use(session({
+//   secret: process.env.secretKey,
+//   resave: true,
+//   saveUninitialized: true
+// }));
+// app.use(passport.initialize());
+// app.use(passport.session());
 
 
 // *** main routes *** //
