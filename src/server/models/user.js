@@ -1,19 +1,15 @@
 var mongoose = require('mongoose');
 var Project = require('./project.js');
 var Post = require('./post.js');
-var bcrypt = require('bcrypt');
+
 var Schema = mongoose.Schema;
+var passportLocalMongoose = require('passport-local-mongoose');
 
 var SALT_WORK_FACTOR;
 
-if (process.env.NODE_ENV === 'test') {
-    SALT_WORK_FACTOR = 1;
-} else {
-    SALT_WORK_FACTOR = 10;
-}
 
 var User = new Schema ({
-    userName : {
+    username : {
         type     : String,
         required : true,
         index    : {unique : true}
@@ -34,32 +30,7 @@ var User = new Schema ({
     }
 });
 
-User.methods.generateHash = function(password, callback) {
-    bcrypt.genSalt(10, function(err, salt) {
-        if (err) {
-            console.log(err);
-            return (err);
-        }
-        bcrypt.hash(password, salt, function(err, hash) {
-            if (err) {
-                console.log(err);
-                return (err);
-            } else {
-                return callback(err, hash);
-            }
-        });
-    });
-};
-
-User.methods.comparePassword = function(password, next) {
-    bcrypt.compare(password, this.password, function(err, match) {
-        if (err) {
-            return next(err);
-        } else {
-            return next(null, match);
-        }
-    });
-};
+User.plugin(passportLocalMongoose);
 
 
 module.exports = mongoose.model('users', User);

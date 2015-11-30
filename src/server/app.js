@@ -9,10 +9,13 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var config = require('../../_config.js');
+var passport = require('passport');
+var session = require('express-session');
 
 
 // *** routes *** //
 var routes = require('./routes/index.js');
+var auth = require('./routes/auth.js')
 var userRoutes = require('./routes/userRoutes.js');
 var projectRoutes = require('./routes/projectRoutes.js');
 var postRoutes = require('./routes/postRoutes.js');
@@ -38,17 +41,18 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, '../client')));
-// app.use(session({
-//   secret: process.env.secretKey,
-//   resave: true,
-//   saveUninitialized: true
-// }));
-// app.use(passport.initialize());
-// app.use(passport.session());
+app.use(session({
+  secret: process.env.secretKey,
+  resave: true,
+  saveUninitialized: true
+}));
+app.use(passport.initialize());
+app.use(passport.session());
 
 
 // *** main routes *** //
 app.use('/', routes);
+app.use('/auth/', auth)
 app.use('/api/', userRoutes);
 app.use('/api/', projectRoutes);
 app.use('/api/', postRoutes);

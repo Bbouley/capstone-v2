@@ -14,7 +14,7 @@ chai.use(chaiHttp);
 
 var should = chai.should();
 
-describe('Test Helper functions', function() {
+xdescribe('Test Helper functions', function() {
 
     beforeEach(function(done) {
         testHelpers.dropAll();

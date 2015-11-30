@@ -3,16 +3,16 @@ var LocalStrategy = require('passport-local');
 var User = require('../models/user.js');
 
 passport.use(new LocalStrategy({
-    passReqToCallback : true,
+    passReqToCallback : true
 },
     function(req, username, password, done) {
         User.findOne({ userName: username }, function (err, user) {
             if (err) {
                 return done(err);
-                }
+            }
             if (!user) {
                 return done(null, false);
-                }
+            }
             user.comparePassword(password, function(err, match) {
                 if (err) {
                     return done(err);

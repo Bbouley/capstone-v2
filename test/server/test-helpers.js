@@ -19,7 +19,7 @@ function seedDB() {
 
     //save users
     var bradley = new User ({
-        userName : 'Bradley',
+        username : 'Bradley',
         email : 'myemail@email.com',
         password : 'Bradley',
         adminOf : [],
@@ -31,7 +31,7 @@ function seedDB() {
     bradley.save();
 
     var testUser1 = new User ({
-        userName : 'testUser1',
+        username : 'testUser1',
         email : 'testUser1@email.com',
         password : 'testUser1',
         adminOf : [],
@@ -43,7 +43,7 @@ function seedDB() {
     testUser1.save();
 
     var testUser2 = new User ({
-        userName : 'testUser2',
+        username : 'testUser2',
         email : 'testUser2@email.com',
         password : 'testUser2',
         adminOf : [],

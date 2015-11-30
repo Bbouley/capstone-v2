@@ -38,7 +38,7 @@ router.post('/users', function(req, res, next) {
     var newUser = new User(req.body);
     newUser.generateHash(req.body.password, function(err, hash) {
         if (err) {
-            console.log(err)
+            console.log(err);
         } else {
             newUser.password = hash;
             newUser.saveQ()

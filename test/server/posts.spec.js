@@ -19,7 +19,7 @@ chai.use(chaiHttp);
 var should = chai.should();
 
 
-describe('posts API', function() {
+xdescribe('posts API', function() {
 
     it('should get ALL posts for single project', function(done) {
 
