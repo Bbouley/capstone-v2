@@ -7,7 +7,7 @@ var mongoose = require('mongoose-q')(require('mongoose'));
 var User = require('../../src/server/models/user.js');
 var Post = require('../../src/server/models/post.js');
 var Project = require('../../src/server/models/project.js');
-var helper = require('./test-helpers.js');
+var testHelpers = require('./test-helpers.js');
 
 var should = chai.should();
 chai.use(chaiHttp);

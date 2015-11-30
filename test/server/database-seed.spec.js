@@ -7,7 +7,7 @@ var mongoose = require('mongoose-q')(require('mongoose'));
 var User = require('../../src/server/models/user.js');
 var Post = require('../../src/server/models/post.js');
 var Project = require('../../src/server/models/project.js');
-var helper = require('./test-helpers.js');
+var testHelpers = require('./test-helpers.js');
 
 var should = chai.should();
 chai.use(chaiHttp);
@@ -17,13 +17,13 @@ var should = chai.should();
 describe('Test Helper functions', function() {
 
     beforeEach(function(done) {
-        helper.dropAll();
-        helper.seedDB();
+        testHelpers.dropAll();
+        testHelpers.seedDB();
         done();
     });
 
     afterEach(function(done) {
-        helper.dropAll();
+        testHelpers.dropAll();
         done();
     });
 

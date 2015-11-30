@@ -19,12 +19,56 @@ router.get('/users', function(req, res, next) {
 });
 
 //get SINGLE user
-
+router.get('/user/:id', function(req, res, next) {
+    User.findById(req.params.id)
+    .populate('adminOf')
+    .populate('memberOf')
+    .populate('postsMade')
+    .exec(function(err, user) {
+        if (err) {
+            res.send(err);
+        } else {
+            res.json(user);
+        }
+    });
+})
 
 //add SINGLE user
-
+router.post('/users', function(req, res, next) {
+    var newUser = new User(req.body);
+    newUser.saveQ()
+    .then(function(result) {
+        res.json(result);
+    })
+    .catch(function(err) {
+        res.send(err);
+    })
+    .done();
+})
 
 //edit SINGLE user
+router.put('/user/:id', function(req, res, next) {
+    var id = req.params.id;
+    var options = {new : true, upsert : true};
+    var payload = (req.body);
+    User.findByIdAndUpdateQ(id, payload, options)
+    .then(function(result) {
+        res.json(result);
+    })
+    .catch(function(err) {
+        res.send(err);
+    })
+    .done();
+})
+
+//add project to adminOf user section (this should happen straight away when user creates project)
+
+
+//add project to memberOf user section
+
+
+//add post to postsMade user section
+
 
 
 //delete SINGLE user (has to be site admin to do this)

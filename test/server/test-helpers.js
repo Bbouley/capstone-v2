@@ -1,9 +1,13 @@
 process.env.NODE_ENV = 'test';
 
+var chai = require('chai');
+var chaiHttp = require('chai-http');
+var server = require('../../src/server/app');
 var mongoose = require('mongoose-q')(require('mongoose'));
 var User = require('../../src/server/models/user.js');
 var Post = require('../../src/server/models/post.js');
 var Project = require('../../src/server/models/project.js');
+chai.use(chaiHttp);
 
 function dropAll() {
     User.collection.drop();
@@ -85,7 +89,22 @@ function seedDB() {
     randomProject.save();
 }
 
+//how to get around async issues and use this in other tests
+function getUserID(cb) {
+    chai.request(server)
+    .get('/api/users')
+    .end(function(err, res) {
+        return({
+            bradleyID : res.body[0]._id,
+            testUser1ID : res.body[1]._id,
+            testUser2ID : res.body[2]._id
+        });
+    });
+}
+
+
 module.exports = {
     seedDB : seedDB,
-    dropAll : dropAll
+    dropAll : dropAll,
+    getUserID : getUserID
 };

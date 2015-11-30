@@ -14,6 +14,8 @@ var should = chai.should();
 
 describe('Projects API', function() {
 
+    //get all projects route is already being tested in dbseed spec file
+
     it('should get ALL projects', function() {
 
     });
