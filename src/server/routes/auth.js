@@ -32,7 +32,7 @@ router.post('/login', function(req, res, next) {
             if (err) {
                 return res.status(500).json({err : 'NO USER FOR YOU'});
             }
-            res.status(200).json({status : 'Much Success!! user now logged in', userId : user._id, user : user.username});
+            res.status(200).json({status : 'Much Success!! user now logged in', userId : user._id, username : user.username});
         });
     })(req, res, next);
 });

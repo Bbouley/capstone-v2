@@ -4,13 +4,15 @@ angular.module('app').factory('AuthService',
 
         var user = null;
         var userId = null;
+        var user = null;
 
         return ({
             isLoggedIn : isLoggedIn,
             getUserStatus : getUserStatus,
             login : login,
             logout : logout,
-            register : register
+            register : register,
+            getUser : getUser
         });
 
 
@@ -26,10 +28,8 @@ function getUserStatus() {
     return user;
 }
 
-function getUserInfo() {
-    var deferred = $q.defer();
-
-    $http.post('/')
+function getUser() {
+    return {userId : userId, username : user};
 }
 
 function login(username, password) {
@@ -41,8 +41,11 @@ function login(username, password) {
     })
     .success(function(data, status) {
         if(status === 200 && data.status) {
+            console.log(JSON.stringify(data));
+            console.log(JSON.stringify(data.username));
             user = true;
-            userId = data.userId
+            userId = JSON.stringify(data.userId);
+            user = JSON.stringify(data.username);
             deferred.resolve();
         } else {
             user = false;
@@ -63,10 +66,14 @@ function logout() {
     $http.get('/auth/logout')
     .success(function(data) {
         user = false;
+        userId = null;
+        username = null;
         deferred.resolve();
     })
     .error(function(data) {
         user = false;
+        userId = null;
+        username = null;
         deferred.reject();
     })
 

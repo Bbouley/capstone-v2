@@ -9,24 +9,29 @@
         })
         .when('/project', {
             templateUrl : './app/partials/project.html',
-            restricted : true
+            restricted : true,
+            access : {restricted : true}
         })
         .when('/login', {
             templateUrl : './app/partials/login.html',
-            controller : 'loginController'
+            controller : 'loginController',
+            access : {restricted : false}
         })
         .when('/logout', {
-            controller : 'logoutController'
+            controller : 'logoutController',
+            access : {restricted : true}
         })
         .when('/register', {
             templateUrl : './app/partials/register.html',
-            controller : 'registerController'
+            controller : 'registerController',
+            access : {restricted : true}
         })
         .otherwise({redirectTo: '/'});
     }]);
 
     angular.module('app').run(function($rootScope, $location, $route, AuthService) {
         $rootScope.$on('$routeChangeStart', function(event, next, current) {
+            console.log(AuthService.getUser());
             if(next.access.restricted && AuthService.isLoggedIn() === false) {
                 $location.path('/login');
             }
