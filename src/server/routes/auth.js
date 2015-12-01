@@ -1,7 +1,6 @@
 var express = require('express');
 var router = express.Router();
 var passport = require('passport');
-var passportLocal = require('../auth/local.js');
 var User = require('../models/user.js');
 
 
@@ -14,7 +13,7 @@ router.post('/register', function(req, res) {
             res.status(500).send({'error whilst registering user!' : err});
         } else {
             passport.authenticate('local')(req, res, function() {
-                res.status(200).json({status : 'Much success!! user now registered'})
+                res.status(200).json({status : 'Much success!! user now registered', userID : user._id, username : user.username})
             });
         }
     });
@@ -22,21 +21,28 @@ router.post('/register', function(req, res) {
 
 
 router.post('/login', function(req, res, next) {
-    passport.authenticate('local', function(error, user, info) {
-        if (error) {
-            return res.json({error : error});
+    passport.authenticate('local', function(err, user, info) {
+        if (err) {
+            return res.status(500).json({err : err});
         }
         if (!user) {
-            return res.json({error : info});
+            return res.status(401).json({err : info});
         }
         req.logIn(user, function(err) {
             if (err) {
-                return res.json({err : 'NO USER FOR YOU'});
+                return res.status(500).json({err : 'NO USER FOR YOU'});
             }
-            res.json({status : 'Much Success!! user now logged in'});
+            res.status(200).json({status : 'Much Success!! user now logged in', userId : user._id, username : user.username});
         });
-    }) (req, res, next);
+    })(req, res, next);
 });
+
+
+router.get('/logout', function(req, res) {
+    console.log(req.body);
+    req.logout();
+    res.status(200).json({status : 'Bye!'});
+})
 
 
 router.get('/logout', function(req, res, next) {

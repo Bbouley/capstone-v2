@@ -1,12 +1,8 @@
 var mongoose = require('mongoose');
 var Project = require('./project.js');
 var Post = require('./post.js');
-
 var Schema = mongoose.Schema;
 var passportLocalMongoose = require('passport-local-mongoose');
-
-var SALT_WORK_FACTOR;
-
 
 var User = new Schema ({
     username : {

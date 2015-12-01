@@ -11,6 +11,10 @@ var mongoose = require('mongoose');
 var config = require('../../_config.js');
 var passport = require('passport');
 var session = require('express-session');
+var localStrategy = require('passport-local').Strategy;
+
+// *** Models/Schemas *** //
+var User = require('./models/user.js');
 
 
 // *** routes *** //
@@ -48,6 +52,11 @@ app.use(session({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
+
+// *** configure passport *** //
+passport.use(new localStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
 
 // *** main routes *** //
