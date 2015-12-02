@@ -14,7 +14,7 @@ chai.use(chaiHttp);
 
 var should = chai.should();
 
-xdescribe('Test Helper functions', function() {
+describe('Test Helper functions', function() {
 
     beforeEach(function(done) {
         testHelpers.dropAll();
@@ -34,15 +34,15 @@ xdescribe('Test Helper functions', function() {
             res.should.have.status(200);
             res.body.should.be.a('array');
             res.body.length.should.equal(3);
-            res.body[0].should.have.property('userName');
+            res.body[0].should.have.property('username');
             res.body[0].should.have.property('email');
             res.body[0].should.have.property('adminOf');
             res.body[0].should.have.property('memberOf');
             res.body[0].should.have.property('postsMade');
             res.body[0].should.have.property('siteAdmin');
-            res.body[0].userName.should.equal('Bradley');
-            res.body[1].userName.should.equal('testUser1');
-            res.body[2].userName.should.equal('testUser2');
+            res.body[0].username.should.equal('Bradley');
+            res.body[1].username.should.equal('testUser1');
+            res.body[2].username.should.equal('testUser2');
             done();
         });
     });

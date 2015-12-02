@@ -30,7 +30,6 @@ router.get('/project/:id', function(req, res, next) {
     .populate('members')
     .populate('posts')
     .exec(function(err, project) {
-        console.log('hello');
         if(err) {
             res.status(500).send(err);
         } else {
@@ -40,12 +39,53 @@ router.get('/project/:id', function(req, res, next) {
 })
 
 //get SINGLE project (without populate)
-
+router.get('/projectonly/:id', function(req, res, next) {
+    Project.findByIdQ(req.params.id)
+    .then(function(project) {
+        res.status(200).json(project);
+    })
+    .catch(function(err) {
+        res.status(500).send(err);
+    })
+    .done();
+})
 
 //add SINGLE project (has to be logged in to do this)
-
+router.post('/projects', function(req, res, next) {
+    var newProject = new Project(req.body);
+    newProject.saveQ()
+    .then(function(project) {
+        res.status(200).json(project);
+    })
+    .catch(function(err) {
+        res.status(500).send(err);
+    })
+    .done();
+})
 
 //edit SINGLE project (Has to be project admin to do this)
+router.put('/project/:id', function(req, res, next) {
+    var userid = req.body.user;
+    var projectid = req.params.id;
+    var update = (req.body.edit);
+    var options = {new : true, upsert : true};
+
+    Project.findByIdQ(projectid)
+    .then(function(result) {
+        if (result.admin === userid) {
+            Project.findByIdAndUpdateQ(projectid, update, options)
+            .then(function(project) {
+                res.status(200).json(project);
+            })
+            .catch(function(err) {
+                res.status(200).send(err);
+            })
+            .done();
+        } else {
+            res.status(403).json({error : 'You are not authorized!!'});
+        }
+    });
+});
 
 
 //delete SINGLE project (has to be project admin to do this, could maybe archive instead of delete it??)
