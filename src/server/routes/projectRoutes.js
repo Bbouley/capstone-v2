@@ -14,16 +14,32 @@ router.get('/projects', function(req, res, next) {
     .populate('posts')
     .execQ()
     .then(function(data) {
-        res.json(data);
+        res.status(200).json(data);
     })
     .catch(function(err) {
-        res.send(err);
+        res.status(500).send(err);
     })
     .done();
 });
 
 
 //get SINGLE project (add in populate function)
+router.get('/project/:id', function(req, res, next) {
+    Project.findById(req.params.id)
+    .populate('admin')
+    .populate('members')
+    .populate('posts')
+    .exec(function(err, project) {
+        console.log('hello');
+        if(err) {
+            res.status(500).send(err);
+        } else {
+            res.status(200).json(project);
+        }
+    });
+})
+
+//get SINGLE project (without populate)
 
 
 //add SINGLE project (has to be logged in to do this)

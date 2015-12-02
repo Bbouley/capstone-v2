@@ -10,7 +10,7 @@ var Post = require('../models/post.js');
 router.get('/users', function(req, res, next) {
     User.findQ()
     .then(function(data) {
-        res.json(data);
+        res.status(200).json(data);
     })
     .catch(function(err) {
         res.send(err);
@@ -18,7 +18,7 @@ router.get('/users', function(req, res, next) {
     .done();
 });
 
-//get SINGLE user
+//get SINGLE user wih populate
 router.get('/user/:id', function(req, res, next) {
     User.findById(req.params.id)
     .populate('adminOf')
@@ -28,33 +28,21 @@ router.get('/user/:id', function(req, res, next) {
         if (err) {
             res.send(err);
         } else {
-            res.json(user);
+            res.status(200).json(user);
         }
     });
 });
 
-//add SINGLE user and hash password
-router.post('/users', function(req, res, next) {
-    var newUser = new User(req.body);
-    newUser.generateHash(req.body.password, function(err, hash) {
-        if (err) {
-            console.log(err);
-        } else {
-            newUser.password = hash;
-            newUser.saveQ()
-            .then(function(result) {
-                res.json(result);
-            })
-            .catch(function(err) {
-                res.send(err);
-            });
-        }
-    });
-});
-
-//log SINGLE user in
-
-
+//get SINGLE user without populate
+router.get('/useronly/:id', function(req, res, next) {
+    User.findByIdQ(req.params.id)
+    .then(function(result) {
+        res.status(200).json(result);
+    })
+    .catch(function(err) {
+        res.status(500).send(err);
+    })
+})
 
 //edit SINGLE user
 router.put('/user/:id', function(req, res, next) {
@@ -63,7 +51,7 @@ router.put('/user/:id', function(req, res, next) {
     var payload = (req.body);
     User.findByIdAndUpdateQ(id, payload, options)
     .then(function(result) {
-        res.json(result);
+        res.status(200).json(result);
     })
     .catch(function(err) {
         res.send(err);
@@ -75,16 +63,43 @@ router.put('/user/:id', function(req, res, next) {
 
 
 //add project to memberOf user section
+router.put('/user/addproject/:userid', function(req, res, next) {
+    var id = req.params.userid;
+    var update = {$push : {memberOf : req.body.edit}};
+    var options = {new : true, upsert : true};
 
+    User.findByIdAndUpdateQ(id, update, options)
+    .then(function(user) {
+        res.status(200).json(user);
+    })
+    .catch(function(err) {
+        res.status(500).send(err);
+    })
+    .done();
+})
 
 //add post to postsMade user section
 
 
 
 //delete SINGLE user (has to be site admin to do this)
+router.delete('/user/:id', function(req, res, next) {
+    if (req.body.siteAdmin === true) {
+        User.findByIdAndRemoveQ(req.params.id)
+        .then(function(result) {
+            res.status(200).json(result);
+        })
+        .catch(function(err) {
+            res.status(500).send(err);
+        })
+    } else {
+        res.status(403).json({error : 'You Are Not Authorized!!'})
+    }
+})
 
 
 //add user onto project(check this isnt being done twice in project routes)
+
 
 
 module.exports = router;

@@ -28,68 +28,97 @@ function seedDB() {
         siteAdmin : true
     });
 
-    bradley.save();
+    bradley.saveQ()
+    .then(function(result) {
 
-    var testUser1 = new User ({
-        username : 'testUser1',
-        email : 'testUser1@email.com',
-        password : 'testUser1',
-        adminOf : [],
-        memberOf : [],
-        postsMade : [],
-        siteAdmin : false
+        var designProject = new Project ({
+            admin : result,
+            members : [],
+            title : 'Design Project',
+            description : 'A project about design',
+            posts : [],
+            category : 'Design',
+            uploads : []
+        });
+
+        designProject.saveQ()
+        .then(function(result) {
+
+            var id = result._id;
+            var update = {$push : {adminOf : designProject}};
+            var options = {new : true, upsert : true};
+
+            User.findByIdAndUpdateQ(id, update, options)
+            .then(function(result) {
+
+                var testUser1 = new User ({
+                    username : 'testUser1',
+                    email : 'testUser1@email.com',
+                    password : 'testUser1',
+                    adminOf : [],
+                    memberOf : [],
+                    postsMade : [],
+                    siteAdmin : false
+                });
+
+                testUser1.saveQ()
+                .then(function(result) {
+
+                    var engineeringProject = new Project ({
+                        admin : result,
+                        members : [],
+                        title : 'Engineering Project',
+                        description : 'A project about engineering',
+                        posts : [],
+                        category : 'Engineering',
+                        uploads : []
+                    });
+
+                    engineeringProject.save()
+
+                    var id = result._id;
+                    var update = {$push : {adminOf : engineeringProject}};
+                    var options = {new : true, upsert : true};
+
+                    User.findByIdAndUpdateQ(id, update, options)
+                    .then(function(result) {
+
+                        var testUser2 = new User ({
+                            username : 'testUser2',
+                            email : 'testUser2@email.com',
+                            password : 'testUser2',
+                            adminOf : [],
+                            memberOf : [],
+                            postsMade : [],
+                            siteAdmin : false
+                        });
+
+                        testUser2.saveQ()
+                        .then(function(result) {
+                            var randomProject = new Project ({
+                                admin : testUser2,
+                                members : [],
+                                title : 'Random Project',
+                                description : 'A random Project',
+                                posts : [],
+                                category : 'Random',
+                                uploads : []
+                            });
+
+                            randomProject.save();
+
+                            var id = result._id;
+                            var update = {$push : {adminOf : randomProject}};
+                            var options = {new : true, upsert : true};
+
+                            User.findByIdAndUpdateQ(id, update, options)
+
+                        });
+                    });
+                });
+            });
+        });
     });
-
-    testUser1.save();
-
-    var testUser2 = new User ({
-        username : 'testUser2',
-        email : 'testUser2@email.com',
-        password : 'testUser2',
-        adminOf : [],
-        memberOf : [],
-        postsMade : [],
-        siteAdmin : false
-    });
-
-    testUser2.save();
-
-    //save projects
-    var designProject = new Project ({
-        admin : [],
-        members : [],
-        title : 'Design Project',
-        description : 'A project about design',
-        posts : [],
-        category : 'Design',
-        uploads : []
-    });
-
-    designProject.save();
-
-    var engineeringProject = new Project ({
-        admin : [],
-        members : [],
-        title : 'Engineering Project',
-        description : 'A project about engineering',
-        posts : [],
-        category : 'Engineering',
-        uploads : []
-    });
-
-    engineeringProject.save();
-
-    var randomProject = new Project ({
-        admin : [],
-        members : [],
-        title : 'Random Project',
-        description : 'A random Project',
-        posts : [],
-        category : 'Random',
-        uploads : []
-    });
-
-    randomProject.save();
 }
 
 //how to get around async issues and use this in other tests

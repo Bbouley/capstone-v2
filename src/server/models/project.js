@@ -4,7 +4,7 @@ var Post = require('./post.js');
 var Schema = mongoose.Schema;
 
 var Project = new Schema ({
-    admin   : [{ type : Schema.Types.ObjectId, ref : 'users' }],
+    admin   : { type : Schema.Types.ObjectId, ref : 'users' },
     members : [{ type : Schema.Types.ObjectId, ref : 'users' }],
     title : {
         type     : String,
