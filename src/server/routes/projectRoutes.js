@@ -30,7 +30,7 @@ router.get('/project/:id', function(req, res, next) {
     .populate('members')
     .populate('posts')
     .exec(function(err, project) {
-        if(err) {
+        if (err) {
             res.status(500).send(err);
         } else {
             res.status(200).json(project);
@@ -109,22 +109,56 @@ router.put('/project/addmember/:id', function(req, res, next) {
     .done();
 })
 
-//add comments to a project, and add project to comment?
+//add comments to a project, and add project to comment, and add that to users array
 router.put('/project/addpost/:id', function(req, res, next) {
-
-    var id = req.params.id;
-    var update = {$push : {posts : req.body.post}}
     var options = {new : true, upsert : true}
+    var postId,
+        post;
 
-    Project.findByIdAndUpdateQ(id, update, options)
-    .then(function(project) {
-        res.status(200).json(project)
+    var newPost = new Post ({
+        madeBy : req.body.user,
+        content : req.body.post.content
+    });
+
+    newPost.saveQ()
+    .then(function(result) {
+
+        postId = result._id
+        post = result;
+
+        var userUpdate = {$push : {postsMade : result}};
+
+        User.findByIdAndUpdateQ(req.body.user, userUpdate, options)
+        .then(function(result) {
+
+            var projectId = req.params.id;
+            var update = {$push : {posts : post}}
+
+            Project.findByIdAndUpdateQ(projectId, update, options)
+            .then(function(project) {
+
+                update = {onProject : project};
+
+                Post.findByIdAndUpdateQ(postId, update, options)
+                .then(function(post) {
+                    res.status(200).json(post);
+                })
+                .catch(function(err) {
+                    res.status(500).send(err);
+                })
+            })
+        })
+        .catch(function(err) {
+            res.status(500).send(err);
+        })
     })
     .catch(function(err) {
         res.status(500).send(err);
     })
     .done();
 });
+
+//get ALL comments for a project
 
 //add uploads to a project (AWS maybe???)
 

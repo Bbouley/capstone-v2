@@ -272,6 +272,8 @@ describe('Users API', function() {
             })
         });
 
+    // it('should add single post to user', funct)
+
 
 });
 

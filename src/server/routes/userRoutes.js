@@ -97,6 +97,32 @@ router.delete('/user/:id', function(req, res, next) {
     }
 })
 
+//delete post from user and post collection, and remove objectID
+router.put('/user/:userid/post/:postid', function(req, res, next) {
+
+    var postId = req.params.postid;
+    var userId = req.params.userid;
+    var
+
+    User.findByIdQ(userId)
+    .then(function(result) {
+
+        var remove = {$pull : {'postsMade' : postId}};
+        var options = {new :true, upsert : true};
+
+        User.findByIdAndUpdateQ(userId, remove, options)
+        .then(function(user) {
+            res.status(200).json(user);
+        })
+        .catch(function(err) {
+            res.status(500).send(err);
+        })
+        .done();
+    })
+    .catch(function(err) {
+        res.status(500).json(err);
+   });
+});
 
 //add user onto project(check this isnt being done twice in project routes)
 

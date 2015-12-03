@@ -7,7 +7,7 @@ var mongoose = require('mongoose-q')(require('mongoose'));
 var User = require('../../src/server/models/user.js');
 var Post = require('../../src/server/models/post.js');
 var Project = require('../../src/server/models/project.js');
-var q = require('q');
+var q =
 chai.use(chaiHttp);
 
 function dropAll() {
@@ -18,7 +18,7 @@ function dropAll() {
 
 function seedDB() {
 
-     var bradley = new User ({
+    var bradley = new User ({
         username : 'Bradley',
         email : 'myemail@email.com',
         password : 'Bradley',

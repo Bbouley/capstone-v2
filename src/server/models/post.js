@@ -5,9 +5,10 @@ var Schema = mongoose.Schema;
 
 var Post = new Schema ({
     madeBy    : { type : Schema.Types.ObjectId, ref : 'users' },
-    onProject : [{ type : Schema.Types.ObjectId, ref : 'projects'}],
+    onProject : { type : Schema.Types.ObjectId, ref : 'projects'},
     upVotes   : {type : Number, default : 0},
-    content   : String
+    content   : String,
+    dateCreated : {type : Date, default : Date.now}
 });
 
 module.exports = mongoose.model('posts', Post);

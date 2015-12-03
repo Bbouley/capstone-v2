@@ -137,7 +137,15 @@ describe('Projects API', function() {
                                                     designProjectID = res.body[0]._id;
                                                     engineeringProjectID = res.body[1]._id;
                                                     randomProjectID = res.body[2]._id;
-                                                    done();
+                                                       var newPost = new Post ({
+                                                        content : 'Test Post for Design Project'
+                                                    });
+                                                    chai.request(server)
+                                                    .put('/api/project/addpost/' + designProjectID)
+                                                    .send({post : newPost, user : bradleyID})
+                                                    .end(function(err, res) {
+                                                        done();
+                                                    });
                                                 });
                                             });
                                         })
@@ -280,32 +288,26 @@ describe('Projects API', function() {
         })
     });
 
-    it('should add SINGLE post to Project', function(done) {
+    it('should add SINGLE post to Project, and add that project to user', function(done) {
         var newPost = new Post ({
-            madeBy : bradleyID,
             content : 'Post On Design Project'
         });
-        newPost.saveQ()
-        .then(function(result) {
-            chai.request(server)
-            .put('/api/project/addpost/' + designProjectID)
-            .send({post : newPost})
-            .end(function(err, res) {
-                console.log(res.body);
-                res.should.have.status(200);
-                res.should.be.json;
-                res.body.should.have.property('admin');
-                res.body.should.have.property('members');
-                res.body.should.have.property('title');
-                res.body.should.have.property('description');
-                res.body.should.have.property('posts');
-                res.body.should.have.property('category');
-                res.body.should.have.property('uploads');
-                res.body.title.should.equal('Design Project');
-                res.body.posts.length.should.equal(1);
-                done();
-            })
-        })
+        chai.request(server)
+        .put('/api/project/addpost/' + designProjectID)
+        .send({post : newPost, user : bradleyID})
+        .end(function(err, res) {
+            res.should.have.status(200);
+            res.should.be.json;
+            res.body.should.have.property('content');
+            res.body.should.have.property('madeBy');
+            res.body.should.have.property('dateCreated');
+            res.body.should.have.property('onProject');
+            res.body.should.have.property('upVotes');
+            res.body.upVotes.should.equal(0);
+            res.body.madeBy.should.equal(bradleyID);
+            res.body.onProject.should.equal(designProjectID);
+            done();
+        });
     });
 
     xit('should add SINGLE upload to project', function() {
