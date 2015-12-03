@@ -26,7 +26,6 @@ describe('Projects API', function() {
     beforeEach(function(done) {
 
         testHelpers.dropAll();
-        // testHelpers.seedDB();
 
         var bradley = new User ({
             username : 'Bradley',
@@ -42,7 +41,7 @@ describe('Projects API', function() {
         .then(function(result) {
 
             var designProject = new Project ({
-                admin : result,
+                admin : result._id,
                 members : [],
                 title : 'Design Project',
                 description : 'A project about design',
@@ -54,7 +53,7 @@ describe('Projects API', function() {
             designProject.saveQ()
             .then(function(result) {
 
-                var id = result._id;
+                var id = designProject.admin;
                 var update = {$push : {adminOf : designProject}};
                 var options = {new : true, upsert : true};
 
@@ -75,7 +74,7 @@ describe('Projects API', function() {
                     .then(function(result) {
 
                         var engineeringProject = new Project ({
-                            admin : result,
+                            admin : result._id,
                             members : [],
                             title : 'Engineering Project',
                             description : 'A project about engineering',
@@ -84,58 +83,65 @@ describe('Projects API', function() {
                             uploads : []
                         });
 
-                        engineeringProject.save()
-
-                        var id = result._id;
-                        var update = {$push : {adminOf : engineeringProject}};
-                        var options = {new : true, upsert : true};
-
-                        User.findByIdAndUpdateQ(id, update, options)
+                        engineeringProject.saveQ()
                         .then(function(result) {
 
-                            var testUser2 = new User ({
-                                username : 'testUser2',
-                                email : 'testUser2@email.com',
-                                password : 'testUser2',
-                                adminOf : [],
-                                memberOf : [],
-                                postsMade : [],
-                                siteAdmin : false
-                            });
+                            var id = engineeringProject.admin;
+                            var update = {$push : {adminOf : engineeringProject}};
+                            var options = {new : true, upsert : true};
 
-                            testUser2.saveQ()
+                            User.findByIdAndUpdateQ(id, update, options)
                             .then(function(result) {
-                                var randomProject = new Project ({
-                                    admin : testUser2,
-                                    members : [],
-                                    title : 'Random Project',
-                                    description : 'A random Project',
-                                    posts : [],
-                                    category : 'Random',
-                                    uploads : []
+
+                                var testUser2 = new User ({
+                                    username : 'testUser2',
+                                    email : 'testUser2@email.com',
+                                    password : 'testUser2',
+                                    adminOf : [],
+                                    memberOf : [],
+                                    postsMade : [],
+                                    siteAdmin : false
                                 });
 
-                                randomProject.save();
+                                testUser2.saveQ()
+                                .then(function(result) {
 
-                                var id = result._id;
-                                var update = {$push : {adminOf : randomProject}};
-                                var options = {new : true, upsert : true};
+                                    var randomProject = new Project ({
+                                        admin : result._id,
+                                        members : [],
+                                        title : 'Random Project',
+                                        description : 'A random Project',
+                                        posts : [],
+                                        category : 'Random',
+                                        uploads : []
+                                    });
 
-                                User.findByIdAndUpdateQ(id, update, options)
-                                    chai.request(server)
-                                .get('/api/users')
-                                .end(function(err, res) {
-                                    bradleyID = res.body[0]._id;
-                                    testUser1ID = res.body[1]._id;
-                                    testUser2ID = res.body[2]._id;
-                                    chai.request(server)
-                                    .get('/api/projects')
-                                    .end(function(err, res) {
-                                        designProjectID = res.body[0]._id;
-                                        engineeringProjectID = res.body[1]._id;
-                                        randomProjectID = res.body[2]._id;
-                                        done();
-                                    })
+                                    randomProject.saveQ()
+                                    .then(function(result) {
+
+                                        var id = randomProject.admin;
+                                        var update = {$push : {adminOf : randomProject}};
+                                        var options = {new : true, upsert : true};
+
+                                        User.findByIdAndUpdateQ(id, update, options)
+                                        .then(function(result) {
+                                             chai.request(server)
+                                            .get('/api/users')
+                                            .end(function(err, res) {
+                                                bradleyID = res.body[0]._id;
+                                                testUser1ID = res.body[1]._id;
+                                                testUser2ID = res.body[2]._id;
+                                                chai.request(server)
+                                                .get('/api/projects')
+                                                .end(function(err, res) {
+                                                    designProjectID = res.body[0]._id;
+                                                    engineeringProjectID = res.body[1]._id;
+                                                    randomProjectID = res.body[2]._id;
+                                                    done();
+                                                });
+                                            });
+                                        })
+                                    });
                                 });
                             });
                         });
@@ -221,7 +227,7 @@ describe('Projects API', function() {
 
     });
 
-    it('should edit SINGLE project if project admin', function() {
+    it('should edit SINGLE project if project admin', function(done) {
         chai.request(server)
         .put('/api/project/' + designProjectID)
         .send({user : bradleyID, edit : {title : 'Edited Project'}})
@@ -236,7 +242,6 @@ describe('Projects API', function() {
             res.body.should.have.property('category');
             res.body.should.have.property('uploads');
             res.body.title.should.equal('Edited Project');
-            res.body.description.should.equal('Testing Test Project');
             done();
         })
     });
@@ -244,7 +249,7 @@ describe('Projects API', function() {
     it('non project admin cannot edit project', function(done) {
         chai.request(server)
         .put('/api/project/' + designProjectID)
-        .send({user : bradleyID, edit : {title : 'Edited Project'}})
+        .send({user : testUser1ID, edit : {title : 'Edited Project'}})
         .end(function(err, res) {
             res.should.have.status(403);
             res.should.be.json;
@@ -255,12 +260,52 @@ describe('Projects API', function() {
     })
 
     //could these be tested in edit project?
-    xit('should add SINGLE member to project', function() {
-
+    it('should add SINGLE member to project', function(done) {
+        chai.request(server)
+        .put('/api/project/addmember/' + designProjectID)
+        .send({id : testUser1ID})
+        .end(function(err, res) {
+            res.should.have.status(200);
+            res.should.be.json;
+            res.body.should.have.property('admin');
+            res.body.should.have.property('members');
+            res.body.should.have.property('title');
+            res.body.should.have.property('description');
+            res.body.should.have.property('posts');
+            res.body.should.have.property('category');
+            res.body.should.have.property('uploads');
+            res.body.title.should.equal('Design Project');
+            res.body.members.length.should.equal(1);
+            done();
+        })
     });
 
-    xit('should add SINGLE comment to project', function() {
-
+    it('should add SINGLE post to Project', function(done) {
+        var newPost = new Post ({
+            madeBy : bradleyID,
+            content : 'Post On Design Project'
+        });
+        newPost.saveQ()
+        .then(function(result) {
+            chai.request(server)
+            .put('/api/project/addpost/' + designProjectID)
+            .send({post : newPost})
+            .end(function(err, res) {
+                console.log(res.body);
+                res.should.have.status(200);
+                res.should.be.json;
+                res.body.should.have.property('admin');
+                res.body.should.have.property('members');
+                res.body.should.have.property('title');
+                res.body.should.have.property('description');
+                res.body.should.have.property('posts');
+                res.body.should.have.property('category');
+                res.body.should.have.property('uploads');
+                res.body.title.should.equal('Design Project');
+                res.body.posts.length.should.equal(1);
+                done();
+            })
+        })
     });
 
     xit('should add SINGLE upload to project', function() {

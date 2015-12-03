@@ -65,6 +65,7 @@ router.post('/projects', function(req, res, next) {
 
 //edit SINGLE project (Has to be project admin to do this)
 router.put('/project/:id', function(req, res, next) {
+
     var userid = req.body.user;
     var projectid = req.params.id;
     var update = (req.body.edit);
@@ -72,7 +73,7 @@ router.put('/project/:id', function(req, res, next) {
 
     Project.findByIdQ(projectid)
     .then(function(result) {
-        if (result.admin === userid) {
+        if (result.admin == userid) {
             Project.findByIdAndUpdateQ(projectid, update, options)
             .then(function(project) {
                 res.status(200).json(project);
@@ -92,10 +93,38 @@ router.put('/project/:id', function(req, res, next) {
 
 
 //add members to a project
+router.put('/project/addmember/:id', function(req, res, next) {
 
+    var projectid = req.params.id;
+    var update = {$push : {members : req.body.id}};
+    var options = {new: true, upsert : true};
 
-//add comments to a project
+    Project.findByIdAndUpdateQ(projectid, update, options)
+    .then(function(result) {
+        res.status(200).json(result);
+    })
+    .catch(function(err) {
+        res.status(500).send(err);
+    })
+    .done();
+})
 
+//add comments to a project, and add project to comment?
+router.put('/project/addpost/:id', function(req, res, next) {
+
+    var id = req.params.id;
+    var update = {$push : {posts : req.body.post}}
+    var options = {new : true, upsert : true}
+
+    Project.findByIdAndUpdateQ(id, update, options)
+    .then(function(project) {
+        res.status(200).json(project)
+    })
+    .catch(function(err) {
+        res.status(500).send(err);
+    })
+    .done();
+});
 
 //add uploads to a project (AWS maybe???)
 
