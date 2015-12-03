@@ -24,7 +24,7 @@
         .when('/register', {
             templateUrl : './app/partials/register.html',
             controller : 'registerController',
-            access : {restricted : true}
+            access : {restricted : false}
         })
         .otherwise({redirectTo: '/'});
     }]);

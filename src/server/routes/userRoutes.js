@@ -102,7 +102,6 @@ router.put('/user/:userid/post/:postid', function(req, res, next) {
 
     var postId = req.params.postid;
     var userId = req.params.userid;
-    var
 
     User.findByIdQ(userId)
     .then(function(result) {
@@ -112,7 +111,13 @@ router.put('/user/:userid/post/:postid', function(req, res, next) {
 
         User.findByIdAndUpdateQ(userId, remove, options)
         .then(function(user) {
-            res.status(200).json(user);
+            Post.findByIdAndRemoveQ(postId)
+            .then(function(post) {
+                res.status(200).json(user);
+            })
+            .catch(function(err) {
+                res.status(500).status(err);
+            })
         })
         .catch(function(err) {
             res.status(500).send(err);

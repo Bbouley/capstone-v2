@@ -12,7 +12,42 @@
 </head>
 <body>
 
+<nav class="navbar navbar-inverse navbar-fixed-top">
   <div class="container">
+    <div class="navbar-header">
+        <a class="navbar-brand" href="/#/">Home</a>
+      </div>
+        <ul class="nav navbar-nav">
+          <li><a href="/#/login">Login</a></li>
+          <li><a href="/#/register">Register</a></li>
+
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a href="#">Action</a></li>
+              <li><a href="#">Another action</a></li>
+              <li><a href="#">Something else here</a></li>
+              <li role="separator" class="divider"></li>
+              <li><a href="#">Separated link</a></li>
+              <li role="separator" class="divider"></li>
+              <li><a href="#">One more separated link</a></li>
+            </ul>
+          </li>
+
+        </ul>
+  </div>
+</nav>
+
+  <div class="container">
+    <div class="jumbotron">
+
+      <h1>Projects</h1>
+
+      <p>Find projects you like, and help build out ideas, or start your own project and find others to help you!!</p>
+
+      <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a></p>
+    </div>
+
     <div ng-view></div>
   </div>
 
