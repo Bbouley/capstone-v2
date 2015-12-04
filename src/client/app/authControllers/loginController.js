@@ -1,7 +1,6 @@
 angular.module('app').controller('loginController',
     ['$scope', '$location', 'AuthService',
     function($scope, $location, AuthService) {
-        console.log(AuthService.getUserStatus());
 
         $scope.login = function() {
             $scope.error = false;
@@ -22,4 +21,5 @@ angular.module('app').controller('loginController',
                 $scope.loginForm = {};
             });
         }
+
     }])

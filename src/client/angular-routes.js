@@ -26,13 +26,18 @@
             controller : 'registerController',
             access : {restricted : false}
         })
+        .when('/newProject', {
+            templateUrl : './app/partials/newProject.html',
+            controller : 'navbarController',
+            access : {restricted : true}
+        })
         .otherwise({redirectTo: '/'});
     }]);
 
     angular.module('app').run(function($rootScope, $location, $route, AuthService) {
         $rootScope.$on('$routeChangeStart', function(event, next, current) {
             console.log(AuthService.getUser());
-            if(next.access.restricted && AuthService.isLoggedIn() === false) {
+            if (next.access.restricted && AuthService.isLoggedIn() === false) {
                 $location.path('/login');
             }
         })
