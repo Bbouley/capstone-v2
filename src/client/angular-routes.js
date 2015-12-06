@@ -31,6 +31,10 @@
             controller : 'navbarController',
             access : {restricted : true}
         })
+        .when('/myProjects', {
+            templateUrl : './app/partials/myProjects.html',
+            access : {restricted : true}
+        })
         .otherwise({redirectTo: '/'});
     }]);
 
