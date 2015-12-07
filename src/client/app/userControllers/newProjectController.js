@@ -1,5 +1,13 @@
-angular.module('app').controller('newProjectController', ['$scope', 'appFactory', function($scope, appFactory) {
+angular.module('app').controller('newProjectController', ['$scope', '$rootScope','appFactory', 'AuthService', function($scope, $rootScope, appFactory, AuthService) {
+    // var user = AuthService.getUser();
     $scope.submitProject = function() {
-        console.log('Form Is Valid!!');
+        var user = $rootScope.user;
+        console.log(user);
+        var url = '/api/' + user.userId + '/projects';
+        var payload = $scope.newProject;
+        appFactory.post(url, payload)
+        .then(function(response) {
+            console.log(response);
+        });
     };
-}])
+}]);

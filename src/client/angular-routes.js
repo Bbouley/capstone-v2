@@ -40,7 +40,7 @@
 
     angular.module('app').run(function($rootScope, $location, $route, AuthService) {
         $rootScope.$on('$routeChangeStart', function(event, next, current) {
-            console.log(AuthService.getUser());
+            $rootScope.user = AuthService.getUser();
             if (next.access.restricted && AuthService.isLoggedIn() === false) {
                 $location.path('/login');
             }
