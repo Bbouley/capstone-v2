@@ -32,7 +32,7 @@
             access : {restricted : true}
         })
         .when('/myProjects', {
-            templateUrl : './app/partials/myProjects.html',
+            templateUrl : './app/partials/userProjects.html',
             access : {restricted : true}
         })
         .otherwise({redirectTo: '/'});
