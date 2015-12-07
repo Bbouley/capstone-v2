@@ -2,12 +2,11 @@ angular.module('app').controller('newProjectController', ['$scope', '$rootScope'
     // var user = AuthService.getUser();
     $scope.submitProject = function() {
         var user = $rootScope.user;
-        console.log(user);
         var url = '/api/' + user.userId + '/projects';
         var payload = $scope.newProject;
         appFactory.post(url, payload)
         .then(function(response) {
-            console.log(response);
+            console.log('server response' + response);
         });
     };
 }]);
