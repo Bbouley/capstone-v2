@@ -44,6 +44,8 @@
   </div>
 </nav>
 
+<!-- Have an error div show up here -->
+
 
 <!-- Modal for new Project -->
 <div class="modal fade" id="projectModal" tabindex="-1" role="dialog" aria-labelledby="projectModalLabel">
@@ -80,6 +82,10 @@
               </div>
 
             </form>
+
+            <div class="alert alert-success col-xs-12" role="alert" ng-show="success">{{ message }}</div>
+
+            <div class="alert alert-danger col-xs-12" role="alert"ng-show="error">{{ message }}</div>
 
             </div>
       </div>

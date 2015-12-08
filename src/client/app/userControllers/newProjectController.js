@@ -4,17 +4,21 @@ angular.module('app').controller('newProjectController', ['$scope', '$rootScope'
     $scope.success = false;
     $scope.message = null;
 
-    $scope.successFunction = function() {
+    function successFunction() {
         $scope.success = true;
+        $scope.message = 'Project Successfully Added!!!'
         $timeout(function() {
             $scope.success = false;
+            $scope.message = null;
         }, 3000)
     }
 
-    $scope.errorFunction = function() {
+    function errorFunction() {
         $scope.error = true;
+        $scope.message = 'Something went wrong...'
         $timeout(function() {
             $scope.error = false;
+            $scope.message = null;
         }, 3000)
     }
 
@@ -29,9 +33,10 @@ angular.module('app').controller('newProjectController', ['$scope', '$rootScope'
         .then(function(res) {
             if (res.status === 200) {
                 $scope.newProject = {};
-                $scope.message = 'Project Successfully Added!!!'
+                successFunction();
             } else {
-                $scope.message = 'Something went wrong...'
+                $scope.newProject = {};
+                errorFunction();
             }
         });
     };
