@@ -5,11 +5,9 @@ angular.module('app').controller('loginController',
         $scope.login = function() {
             $scope.error = false;
             $scope.disabled = true;
-            console.log('Previous User Status : ' + AuthService.getUserStatus());
 
             AuthService.login($scope.loginForm.username, $scope.loginForm.password)
             .then(function() {
-                console.log('Current User Status : ' + AuthService.getUserStatus());
                 $location.path('/');
                 $scope.disabled = false;
                 $scope.loginForm = {};

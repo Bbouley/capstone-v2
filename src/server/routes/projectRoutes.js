@@ -64,26 +64,31 @@ router.post('/projects', function(req, res, next) {
 })
 
 //add SINGLE project with creator as admin
-router.post('/:id/projects', function(req, res, next) {
-    res.json('test')
+router.post('/:userid/projects', function(req, res, next) {
+    User.findByIdQ(req.params.userid)
+    .then(function(user) {
+
+        var newProject = new Project ({
+            admin : user._id,
+            title : req.body.title,
+            description : req.body.description,
+            category : req.body.category
+        });
+
+        newProject.saveQ()
+        .then(function(project) {
+            res.status(200).json(project);
+        })
+        .catch(function(err) {
+            res.send(err);
+        })
+        .done();
+    })
+    .catch(function(err) {
+        res.status(500).send(err);
+    })
+    .done();
 });
-
-
-        // var newProject = new Project ({
-        //     admin : user._id,
-        //     title : req.body.title,
-        //     description : req.body.description,
-        //     category : req.body.category
-        // });
-
-        // newProject.saveQ()
-        // .then(function(project) {
-        //     res.status(200).json(project);
-        // })
-        // .catch(function(err) {
-        //     res.send(err);
-        // })
-        // .done();
 
 //edit SINGLE project (Has to be project admin to do this)
 router.put('/project/:id', function(req, res, next) {

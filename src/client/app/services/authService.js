@@ -41,8 +41,6 @@ function login(username, password) {
     })
     .success(function(data, status) {
         if(status === 200 && data.status) {
-            console.log(JSON.stringify(data));
-            console.log(JSON.stringify(data.username));
             user = true;
             userId = JSON.stringify(data.userId);
             user = JSON.stringify(data.username);
