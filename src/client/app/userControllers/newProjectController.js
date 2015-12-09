@@ -25,9 +25,7 @@ angular.module('app').controller('newProjectController', ['$scope', '$rootScope'
     $scope.submitProject = function() {
         var user = $rootScope.user;
         var id = (user.userId).replace(/"/g,"");;
-        console.log(id);
         var url = '/api/' + id + '/projects';
-        console.log(url);
         var payload = $scope.newProject;
         appFactory.post(url, payload)
         .then(function(res) {
@@ -42,3 +40,5 @@ angular.module('app').controller('newProjectController', ['$scope', '$rootScope'
     };
 
 }]);
+
+
