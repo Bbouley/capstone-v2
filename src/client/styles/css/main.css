@@ -10,3 +10,8 @@ a {
 .border {
     border : 1px solid black;
 }
+
+.jumbotron {
+  height: 50vh;
+  width : 100%;
+}
