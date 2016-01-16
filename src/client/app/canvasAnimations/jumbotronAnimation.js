@@ -35,7 +35,7 @@ $(document).ready(function(){
     //speed.x range = -2.5 to 2.5
     //speed.y range = -15 to -5 to make it move upwards
     //lets change the Y speed to make it look like a flame
-    this.speed = {x: -2.5+Math.random()*5, y: -15+Math.random()*10};
+    this.speed = {x: -1+Math.random()*5, y: -20+Math.random()*10};
     //location = mouse coordinates
     //Now the flame follows the mouse coordinates
     if(mouse.x && mouse.y)
@@ -100,5 +100,5 @@ $(document).ready(function(){
     }
   }
 
-  setInterval(draw, 33);
+  setInterval(draw, 20);
 });
