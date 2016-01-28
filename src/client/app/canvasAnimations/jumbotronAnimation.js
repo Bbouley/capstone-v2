@@ -1,6 +1,6 @@
 $(document).ready(function(){
   var canvas = document.getElementById("canvas");
-  console.log(canvas)
+  console.log(canvas);
   var ctx = canvas.getContext("2d");
 
   //Make the canvas occupy the full page
@@ -15,7 +15,7 @@ $(document).ready(function(){
   var particle_count = 100;
   for(var i = 0; i < particle_count; i++)
   {
-    particles.push(new particle());
+    particles.push(new Particle());
   }
 
   //finally some mouse tracking
@@ -29,7 +29,7 @@ $(document).ready(function(){
     mouse.y = e.pageY;
   }
 
-  function particle()
+  function Particle()
   {
     //speed, life, location, life, colors
     //speed.x range = -2.5 to 2.5
@@ -75,7 +75,7 @@ $(document).ready(function(){
       ctx.beginPath();
       //changing opacity according to the life.
       //opacity goes to 0 at the end of life of a particle
-      p.opacity = Math.round(p.remaining_life/p.life*100)/100
+      p.opacity = Math.round(p.remaining_life/p.life*100)/100;
       //a gradient instead of white fill
       var gradient = ctx.createRadialGradient(p.location.x, p.location.y, 0, p.location.x, p.location.y, p.radius);
       gradient.addColorStop(0, "rgba("+p.r+", "+p.g+", "+p.b+", "+p.opacity+")");
@@ -95,7 +95,7 @@ $(document).ready(function(){
       if(p.remaining_life < 0 || p.radius < 0)
       {
         //a brand new particle replacing the dead one
-        particles[i] = new particle();
+        particles[i] = new Particle();
       }
     }
   }
