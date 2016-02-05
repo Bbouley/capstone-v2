@@ -1,5 +1,7 @@
 ##To Do
 
+### Set up project on Pivotal!!!
+
 1. change buttons to only show new project if user is logged in.
 1. add in image uploading carousel to new project
 1. create boilerplate template for viewing project
